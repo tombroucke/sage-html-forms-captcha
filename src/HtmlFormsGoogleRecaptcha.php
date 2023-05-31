@@ -18,19 +18,23 @@ class HtmlFormsGoogleRecaptcha extends Captcha implements CaptchaContract {
 
     public function validate($error, $form, $data)
     {
-        $recaptcha = new ReCaptcha(
-            $this->config['secretKey']
-        );
+        try {
+            $recaptcha = new ReCaptcha(
+                $this->config['secretKey']
+            );
 
-        $response = $recaptcha->setExpectedHostname(
-            wp_parse_url(home_url(), PHP_URL_HOST)
-        )->verify(
-            $data['g-recaptcha-response'] ?? '',
-            $_SERVER['REMOTE_ADDR']
-        );
+            $response = $recaptcha->setExpectedHostname(
+                wp_parse_url(home_url(), PHP_URL_HOST)
+            )->verify(
+                $data['g-recaptcha-response'] ?? '',
+                $_SERVER['REMOTE_ADDR']
+            );
 
-        if (! $response->isSuccess()) {
-            return 'invalid_captcha';
+            if (! $response->isSuccess()) {
+                return 'invalid_captcha';
+            }
+        } catch (\Exception $e) {
+            return 'could_not_validate_captcha';
         }
 
         return $error;

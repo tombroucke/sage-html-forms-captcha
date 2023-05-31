@@ -18,6 +18,7 @@ return [
             'invalid_captcha' => __('Invalid hCaptcha response. Did you check the "I am human" box?', 'sage'),
         ],
         'configuration_errors' => __('Sage HTML Forms Captcha configuration errors:', 'sage'),
+        'could_not_validate_captcha' => __('Error: Could not validate captcha. Please contact us through other means.', 'sage'),
     ],
 
 ];

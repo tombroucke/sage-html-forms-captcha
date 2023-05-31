@@ -17,16 +17,21 @@ class HtmlFormsHcaptcha extends Captcha implements CaptchaContract {
 
     public function validate($error, $form, $data)
     {
-        $response = wp_remote_post('https://hcaptcha.com/siteverify', [
-            'body' => [
-                'secret' => $this->config['secretKey'],
-                'response' => $data['h-captcha-response'] ?? '',
-                'remoteip' => $_SERVER['REMOTE_ADDR']
-            ]
-        ]);
-        $body = json_decode(wp_remote_retrieve_body($response));
-        if (! $body->success) {
-            return 'invalid_captcha';
+        try {
+            $response = wp_remote_post('https://hcaptcha.com/siteverify', [
+                'body' => [
+                    'secret' => $this->config['secretKey'],
+                    'response' => $data['h-captcha-response'] ?? '',
+                    'remoteip' => $_SERVER['REMOTE_ADDR']
+                ]
+            ]);
+            throw new \Exception('test');
+            $body = json_decode(wp_remote_retrieve_body($response));
+            if (! $body->success) {
+                return 'invalid_captcha';
+            }
+        } catch (\Exception $e) {
+            return 'could_not_validate_captcha';
         }
         return $error;
     }

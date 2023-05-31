@@ -72,6 +72,10 @@ class SageHtmlFormsCaptchaServiceProvider extends ServiceProvider
             add_filter('hf_validate_form', [$this->app->make(HtmlFormsCaptcha::class), 'validate'], 10, 3);
             add_filter('hf_form_message_invalid_captcha', [$this->app->make(HtmlFormsCaptcha::class), 'invalidCaptchaNotice']);
             add_filter('hf_form_html', [$this->app->make(HtmlFormsCaptcha::class), 'insertCaptcha'], 10, 2);
+
+            add_filter('hf_form_message_could_not_validate_captcha', function() {
+                return config('html-forms-captcha.strings.could_not_validate_captcha');
+            });
         } else {
             add_filter('hf_form_html', [$this->app->make(HtmlFormsCaptcha::class), 'configurationErrorsNotice'], 10, 2);
             add_action('admin_notices', function() use ($configErrors) {
