@@ -1,31 +1,39 @@
-# Acorn Example Package
+# Sage HTML Forms captcha
 
-This repo can be used to scaffold an Acorn package. See the [Acorn Package Development](https://roots.io/acorn/docs/package-development/) docs for further information.
+Easily add captcha's to [HTML Forms](https://wordpress.org/plugins/html-forms/).
 
 ## Installation
 
 You can install this package with Composer:
 
 ```bash
-composer require vendor-name/example-package
+composer require tombroucke/sage-html-forms-captcha
 ```
 
 You can publish the config file with:
 
 ```shell
-$ wp acorn vendor:publish --provider="VendorName\ExamplePackage\Providers\ExampleServiceProvider"
+$ wp acorn vendor:publish --provider="Otomaties\SageHtmlFormsCaptcha\Providers\SageHtmlFormsCaptchaServiceProvider"
 ```
 
 ## Usage
 
-From a Blade template:
+### hCaptcha
 
-```blade
-@include('Example::example')
+Define your site key and site secret in your .env file:
+
+```bash
+HCAPTCHA_SITE_KEY='########-####-####-####-############'
+HCAPTCHA_SECRET_KEY='#x########################################'
 ```
 
-From WP-CLI:
+### reCAPTCHA (v2)
 
-```shell
-$ wp acorn example
+Change `'captchaType'` to `'recaptcha'` in your published config file.
+
+Define your site key and site secret in your .env file:
+
+```bash
+RECAPTCHA_SITE_KEY='########################################'
+RECAPTCHA_SECRET_KEY='########################################'
 ```
