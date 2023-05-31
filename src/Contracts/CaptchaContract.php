@@ -1,7 +1,7 @@
 <?php
 namespace Otomaties\SageHtmlFormsCaptcha\Contracts;
 
-interface Captcha {
+interface CaptchaContract {
     public function validate($error, $form, $data);
     public function invalidCaptchaNotice();
     public function insertCaptcha($html, $form);

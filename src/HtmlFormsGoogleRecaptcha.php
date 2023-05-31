@@ -2,9 +2,10 @@
 namespace Otomaties\SageHtmlFormsCaptcha;
 
 use ReCaptcha\ReCaptcha;
-use Otomaties\SageHtmlFormsCaptcha\Contracts\Captcha;
+use Otomaties\SageHtmlFormsCaptcha\Abstracts\Captcha;
+use Otomaties\SageHtmlFormsCaptcha\Contracts\CaptchaContract;
 
-class HtmlFormsGoogleRecaptcha implements Captcha {
+class HtmlFormsGoogleRecaptcha extends Captcha implements CaptchaContract {
 
     private $app;
     private $config;
@@ -72,9 +73,5 @@ class HtmlFormsGoogleRecaptcha implements Captcha {
         $notice = sprintf('<p>%s</p>', config('html-forms-captcha.strings.recaptcha.missing_configuration'));
         $html = $this->insertBeforeSubmitButton($html, $notice);
         return $html;
-    }
-
-    private function insertBeforeSubmitButton($html, $insert) {
-        return str_replace('<button', $insert . '<button', $html);
     }
 }

@@ -1,9 +1,10 @@
 <?php
 namespace Otomaties\SageHtmlFormsCaptcha;
 
-use Otomaties\SageHtmlFormsCaptcha\Contracts\Captcha;
+use Otomaties\SageHtmlFormsCaptcha\Abstracts\Captcha;
+use Otomaties\SageHtmlFormsCaptcha\Contracts\CaptchaContract;
 
-class HtmlFormsHcaptcha implements Captcha {
+class HtmlFormsHcaptcha extends Captcha implements CaptchaContract {
 
     private $app;
     private $config;
@@ -67,9 +68,5 @@ class HtmlFormsHcaptcha implements Captcha {
         $notice = sprintf('<p>%s</p>', config('html-forms-captcha.strings.hcaptcha.missing_configuration'));
         $html = $this->insertBeforeSubmitButton($html, $notice);
         return $html;
-    }
-
-    private function insertBeforeSubmitButton($html, $insert) {
-        return str_replace('<button', $insert . '<button', $html);
     }
 }
