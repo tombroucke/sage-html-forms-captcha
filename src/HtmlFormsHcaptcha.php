@@ -25,7 +25,6 @@ class HtmlFormsHcaptcha extends Captcha implements CaptchaContract {
                     'remoteip' => $_SERVER['REMOTE_ADDR']
                 ]
             ]);
-            throw new \Exception('test');
             $body = json_decode(wp_remote_retrieve_body($response));
             if (! $body->success) {
                 return 'invalid_captcha';
