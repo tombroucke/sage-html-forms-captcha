@@ -4,6 +4,11 @@ return [
 
     'captchaType' => 'hcaptcha',
 
+    'hCaptchaSettings' => [
+        'theme' => 'light',
+        'size' => 'normal',
+    ],
+
     'strings' => [
         'recaptcha' => [
             'site_key_not_set' => __('<code>RECAPTCHA_SITE_KEY</code> is not set.', 'sage'),

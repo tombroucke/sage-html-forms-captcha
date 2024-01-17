@@ -42,7 +42,12 @@ class HtmlFormsHcaptcha extends Captcha implements CaptchaContract {
 
     public function insertCaptcha($html, $form)
     {
-        $recaptchaCode = sprintf('<div class="h-captcha" data-sitekey="%s"></div>', $this->config['siteKey']);
+        $recaptchaCode = sprintf(
+            '<div class="h-captcha" data-theme="%s" data-size="%s" data-sitekey="%s"></div>',
+            config('html-forms-captcha.hCaptchaSettings.theme'),
+            config('html-forms-captcha.hCaptchaSettings.size'),
+            $this->config['siteKey']
+        );
         $html = $this->insertBeforeSubmitButton($html, $recaptchaCode);
         if (function_exists('wp_enqueue_script')) {
             $queryArgs = [
