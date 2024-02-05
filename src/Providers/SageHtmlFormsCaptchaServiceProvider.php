@@ -2,7 +2,7 @@
 
 namespace Otomaties\SageHtmlFormsCaptcha\Providers;
 
-use Roots\Acorn\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Otomaties\SageHtmlFormsCaptcha\HtmlFormsCaptcha;
 use Otomaties\SageHtmlFormsCaptcha\HtmlFormsHcaptcha;
 use Otomaties\SageHtmlFormsCaptcha\HtmlFormsGoogleRecaptcha;
