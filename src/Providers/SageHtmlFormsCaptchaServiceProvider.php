@@ -4,8 +4,8 @@ namespace Otomaties\SageHtmlFormsCaptcha\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Otomaties\SageHtmlFormsCaptcha\HtmlFormsCaptcha;
-use Otomaties\SageHtmlFormsCaptcha\HtmlFormsHcaptcha;
 use Otomaties\SageHtmlFormsCaptcha\HtmlFormsGoogleRecaptcha;
+use Otomaties\SageHtmlFormsCaptcha\HtmlFormsHcaptcha;
 
 class SageHtmlFormsCaptchaServiceProvider extends ServiceProvider
 {
@@ -41,7 +41,6 @@ class SageHtmlFormsCaptchaServiceProvider extends ServiceProvider
     /**
      * Find a variable in the $_SERVER superglobal or in the constants.
      *
-     * @param string $name
      * @return string|null
      */
     private function findVariable(string $name)
@@ -52,6 +51,7 @@ class SageHtmlFormsCaptchaServiceProvider extends ServiceProvider
         if (defined($name)) {
             return constant($name);
         }
+
         return null;
     }
 
@@ -68,17 +68,17 @@ class SageHtmlFormsCaptchaServiceProvider extends ServiceProvider
 
         $configErrors = $this->app->make(HtmlFormsCaptcha::class)->validateConfig();
         if (empty($configErrors)) {
-            add_filter('hf_validate_form_request_size', '__return_false' );
+            add_filter('hf_validate_form_request_size', '__return_false');
             add_filter('hf_validate_form', [$this->app->make(HtmlFormsCaptcha::class), 'validate'], 10, 3);
             add_filter('hf_form_message_invalid_captcha', [$this->app->make(HtmlFormsCaptcha::class), 'invalidCaptchaNotice']);
             add_filter('hf_form_html', [$this->app->make(HtmlFormsCaptcha::class), 'insertCaptcha'], 10, 2);
 
-            add_filter('hf_form_message_could_not_validate_captcha', function() {
+            add_filter('hf_form_message_could_not_validate_captcha', function () {
                 return config('html-forms-captcha.strings.could_not_validate_captcha');
             });
         } else {
             add_filter('hf_form_html', [$this->app->make(HtmlFormsCaptcha::class), 'configurationErrorsNotice'], 10, 2);
-            add_action('admin_notices', function() use ($configErrors) {
+            add_action('admin_notices', function () use ($configErrors) {
                 if (empty($configErrors)) {
                     return;
                 }
@@ -86,7 +86,7 @@ class SageHtmlFormsCaptchaServiceProvider extends ServiceProvider
                 $notice .= sprintf('<p>%s</p>', config('html-forms-captcha.strings.configuration_errors'));
                 $notice .= '<ol>';
                 foreach ($configErrors as $error) {
-                    $notice .= '<li>' . $error . '</li>';
+                    $notice .= '<li>'.$error.'</li>';
                 }
                 $notice .= '</ol>';
                 $notice .= '</div>';

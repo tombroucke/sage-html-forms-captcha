@@ -1,13 +1,15 @@
 <?php
+
 namespace Otomaties\SageHtmlFormsCaptcha;
 
-use ReCaptcha\ReCaptcha;
 use Otomaties\SageHtmlFormsCaptcha\Abstracts\Captcha;
 use Otomaties\SageHtmlFormsCaptcha\Contracts\CaptchaContract;
+use ReCaptcha\ReCaptcha;
 
-class HtmlFormsGoogleRecaptcha extends Captcha implements CaptchaContract {
-
+class HtmlFormsGoogleRecaptcha extends Captcha implements CaptchaContract
+{
     private $app;
+
     private $config;
 
     public function __construct($app, $config)
@@ -53,8 +55,9 @@ class HtmlFormsGoogleRecaptcha extends Captcha implements CaptchaContract {
             $queryArgs = [
                 'hl' => substr(config('app.locale'), 0, 2),
             ];
-			wp_enqueue_script('google-recaptcha', add_query_arg($queryArgs, '//www.google.com/recaptcha/api.js'));
-		}
+            wp_enqueue_script('google-recaptcha', add_query_arg($queryArgs, '//www.google.com/recaptcha/api.js'));
+        }
+
         return $html;
     }
 
@@ -67,15 +70,18 @@ class HtmlFormsGoogleRecaptcha extends Captcha implements CaptchaContract {
         if (! $this->config['secretKey']) {
             $errors[] = config('html-forms-captcha.strings.recaptcha.secret_key_not_set');
         }
+
         return $errors;
     }
 
-    public function configurationErrorsNotice($html, $form) {
+    public function configurationErrorsNotice($html, $form)
+    {
         if (! current_user_can('manage_options')) {
             return $html;
         }
         $notice = sprintf('<p>%s</p>', config('html-forms-captcha.strings.recaptcha.missing_configuration'));
         $html = $this->insertBeforeSubmitButton($html, $notice);
+
         return $html;
     }
 }
