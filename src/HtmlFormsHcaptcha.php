@@ -54,7 +54,7 @@ class HtmlFormsHcaptcha extends Captcha implements CaptchaContract
         $html = $this->insertBeforeSubmitButton($html, $recaptchaCode);
         if (function_exists('wp_enqueue_script')) {
             $queryArgs = [
-                'hl' => substr(config('app.locale'), 0, 2),
+                'hl' => substr(get_locale(), 0, 2),
             ];
             wp_enqueue_script('hcaptcha', add_query_arg($queryArgs, '//js.hcaptcha.com/1/api.js'));
         }

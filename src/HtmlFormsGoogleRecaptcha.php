@@ -53,7 +53,7 @@ class HtmlFormsGoogleRecaptcha extends Captcha implements CaptchaContract
         $html = $this->insertBeforeSubmitButton($html, $recaptchaCode);
         if (function_exists('wp_enqueue_script')) {
             $queryArgs = [
-                'hl' => substr(config('app.locale'), 0, 2),
+                'hl' => substr(get_locale(), 0, 2),
             ];
             wp_enqueue_script('google-recaptcha', add_query_arg($queryArgs, '//www.google.com/recaptcha/api.js'));
         }
